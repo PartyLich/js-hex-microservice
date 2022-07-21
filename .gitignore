@@ -1,0 +1,10 @@
+node_modules/
+.nyc_output/
+.vscode/
+.env
+.dist/
+build/
+.env*.local
+tsconfig.tsbuildinfo
+
+*.vim

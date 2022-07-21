@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# execute tests/lint/etc
+npm run verify
