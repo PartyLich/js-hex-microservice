@@ -1,8 +1,11 @@
+import * as t from 'io-ts';
+
 // Redirect model
-export type Redirect = {
-  code: string;
-  url: string;
-  createdAt: number;
-}
+export const Redirect = t.type({
+  code: t.string,
+  url: t.string,
+  createdAt: t.number,
+}, 'Redirect');
+export type Redirect = t.TypeOf<typeof Redirect>
 
 export default Redirect;
