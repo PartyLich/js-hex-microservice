@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "fp-ts": "^2.12.1",
+    "io-ts": "^2.2.16",
     "nanoid": "^3.3.4"
   },
   "devDependencies": {
