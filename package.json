@@ -9,7 +9,7 @@
     "build": "tsc",
     "dev": "ts-node src/index",
     "start": "node build/index",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava",
     "clean": "tsc --build --clean",
     "cov": "nyc npm run test",
     "lint": "eslint ./src --ext .js,.ts,.tsx && echo Lint Complete",
