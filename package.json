@@ -15,7 +15,7 @@
     "lint": "eslint ./src --ext .js,.ts,.tsx && echo Lint Complete",
     "lint:fix": "eslint ./src --ext .js,.ts,.tsx --fix && echo Lint Fix Complete",
     "types": "tsc --noEmit --incremental && echo typecheck Complete",
-    "verify": "npm run -s test && npm run types && npm run -s lint && npm run -s lint:css",
+    "verify": "npm run -s test && npm run types && npm run -s lint",
     "watch:ts": "tsc --watch"
   },
   "author": "Arthur E. Jones",
