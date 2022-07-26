@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  title: URL Shortener
+  version: 0.1.0
+  description: "hex architecture service example"
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:3000
+    description: Local development
+paths:
+  "/{code}":
+    get:
+      summary: Redirect to full url
+      operationId: getRedirect
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "301":
+          description: Redirect to long URL
+        "404":
+          description:  Short code not found
+        "500":
+          description: Internal server error
+  "/":
+    post:
+      summary: Create a short url
+      operationId: createRedirect
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                $ref: "#/components/schemas/Redirect"
+          application/x-msgpack:
+              schema:
+                $ref: "#/components/schemas/Redirect"
+      responses:
+        "201":
+          description: Created redirect
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Redirect"
+            application/x-msgpack:
+              schema:
+                $ref: "#/components/schemas/Redirect"
+        "400":
+          description: malformed request
+        "500":
+          description: Internal server error
+components:
+  schemas:
+    Redirect:
+      type: object
+      properties:
+        code:
+          type: string
+        url:
+          type: string
+          example: "https://google.com"
+        createdAt:
+          type: number
