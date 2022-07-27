@@ -4,8 +4,10 @@ import { flow } from 'fp-ts/function';
 
 import { Redirect, RedirectService, RedirectStore } from './';
 
-export const ErrRedirectNotFound = new Error('Redirect Not Found');
-export const ErrRedirectInvalid = new Error('Redirect Invalid');
+export const ErrRedirectNotFound = Error('Redirect Not Found');
+ErrRedirectNotFound.name = 'RedirectNotFoundError';
+export const ErrRedirectInvalid = Error('Redirect Invalid');
+ErrRedirectInvalid.name = 'RedirectInvalidError';
 
 // Retrieves an URL based on its short code.
 const find = (store: RedirectStore) => store.find;

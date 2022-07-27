@@ -3,6 +3,7 @@ import { Either, tryCatch, map, chain, mapLeft } from 'fp-ts/Either';
 import { PathReporter } from 'io-ts/lib/PathReporter';
 
 import { Redirect, RedirectSerializer, ErrRedirectInvalid } from 'service';
+import { setErrName } from 'utils';
 
 // Encode converts a Redirect to json
 export const encode = (input: Redirect): Either<Error, Buffer> =>
@@ -16,6 +17,7 @@ export const encode = (input: Redirect): Either<Error, Buffer> =>
       ),
       // default encoding is utf8
       map(Buffer.from),
+      mapLeft(setErrName('SerializationError')),
   );
 
 const parseJson = (input: Buffer): Either<Error, unknown> =>
@@ -46,6 +48,7 @@ export const decode = (input: Buffer): Either<Error, Redirect> =>
             ))(validation),
           mapLeft((msg) => Error(msg, { cause: ErrRedirectInvalid })),
       )),
+      mapLeft(setErrName('SerializationError')),
   );
 
 const serializer: RedirectSerializer = {
