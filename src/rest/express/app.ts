@@ -2,6 +2,7 @@ import { pipe } from 'fp-ts/function';
 import { fold, chain, fromNullable, fromPredicate } from 'fp-ts/Either';
 import express, { RequestHandler } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import PinoHttp, { Options } from 'pino-http';
 
 import {
   RedirectService,
@@ -31,6 +32,7 @@ const getRedirect =
           chain(redirectService.find),
           fold(
               (err) => {
+                req.log.error(err);
                 if (err.cause === ErrRedirectNotFound) {
                   res.sendStatus(StatusCodes.NOT_FOUND);
                   return;
@@ -67,6 +69,7 @@ const createRedirect = (redirectService: RedirectService): RequestHandler =>
         chain(getSerializer(contentType).encode),
         fold(
             (err) => {
+              req.log.error(err);
               if (err.cause === ErrRedirectInvalid) {
                 return res.sendStatus(StatusCodes.BAD_REQUEST);
               }
@@ -99,6 +102,9 @@ const makeHandler = ({ service, logger = defaultLogger }: Config) => {
     ],
   }));
   app.use(express.urlencoded({ extended: false }));
+  app.use(PinoHttp({
+    logger: logger as Options['logger'],
+  }));
 
   app.route('/:code')
       .get(getRedirect(service));
