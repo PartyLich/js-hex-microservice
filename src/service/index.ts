@@ -1,3 +1,4 @@
+export * from './logger';
 export * from './logic';
 export * from './model';
 export * from './service';
