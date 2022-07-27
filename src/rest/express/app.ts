@@ -8,8 +8,10 @@ import {
   RedirectSerializer,
   ErrRedirectInvalid,
   ErrRedirectNotFound,
+  Logger,
 } from 'service';
 import jsonSerializer from 'serialize/json';
+import defaultLogger from 'logger';
 
 const getSerializer = (contentType: string): RedirectSerializer => {
   return jsonSerializer;
@@ -80,7 +82,12 @@ const createRedirect = (redirectService: RedirectService): RequestHandler =>
     );
   };
 
-const makeHandler = (redirectService: RedirectService) => {
+ type Config = {
+   service: RedirectService;
+   logger?: Logger;
+ }
+
+const makeHandler = ({ service, logger = defaultLogger }: Config) => {
   const app = express();
 
   app.disable('x-powered-by');
@@ -94,9 +101,9 @@ const makeHandler = (redirectService: RedirectService) => {
   app.use(express.urlencoded({ extended: false }));
 
   app.route('/:code')
-      .get(getRedirect(redirectService));
+      .get(getRedirect(service));
   app.route('/')
-      .post(createRedirect(redirectService));
+      .post(createRedirect(service));
 
   return app;
 };

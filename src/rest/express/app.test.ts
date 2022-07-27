@@ -16,7 +16,7 @@ test.before(async (t) => {
     createdAt: 0,
   });
 
-  t.context.server = app(service);
+  t.context.server = app({ service });
 });
 
 // Redirect to long URL

@@ -15,7 +15,7 @@ const run = async () => {
   const config = loadConfig();
   const repo = MemoryStore();
   const service = RedirectService(repo);
-  const server = ExpressServer(service);
+  const server = ExpressServer({ service, logger });
 
   logger.info(config, `Listening on ${ config.hostname }:${ config.port } ...`);
   server.listen(config.port, config.hostname);
