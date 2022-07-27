@@ -100,6 +100,7 @@ const makeHandler = ({ service, logger = defaultLogger }: Config) => {
       'application/json',
       'application/octet-stream',
     ],
+    limit: '20mb',
   }));
   app.use(express.urlencoded({ extended: false }));
   app.use(PinoHttp({
